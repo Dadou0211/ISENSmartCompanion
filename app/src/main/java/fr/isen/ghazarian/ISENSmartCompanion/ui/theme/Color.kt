@@ -1,4 +1,4 @@
-package com.example.isensmartcompanion.ui.theme
+package fr.isen.ghazarian.isensmartcompanion.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

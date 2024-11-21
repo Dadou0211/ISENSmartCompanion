@@ -1,4 +1,4 @@
-package com.example.isensmartcompanion.ui.theme
+package fr.isen.ghazarian.isensmartcompanion.ui.theme
 
 import android.app.Activity
 import android.os.Build
