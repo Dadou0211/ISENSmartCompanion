@@ -18,7 +18,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import fr.isen.ghazarian.isensmartcompanion.component.AgendaScreen
-
 import fr.isen.ghazarian.isensmartcompanion.component.EventScreen
 import fr.isen.ghazarian.isensmartcompanion.component.HistoryScreen
 import fr.isen.ghazarian.isensmartcompanion.component.MyMainScreen
@@ -88,14 +87,6 @@ data class NavigationItem(
     val route: String,
     val icon: androidx.compose.ui.graphics.vector.ImageVector
 )
-
-
-
-
-
-
-
-
 
 @Preview(showBackground = true)
 @Composable

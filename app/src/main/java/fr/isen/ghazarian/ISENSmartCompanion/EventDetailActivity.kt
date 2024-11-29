@@ -10,25 +10,22 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import fr.isen.ghazarian.isensmartcompanion.component.Event
 
 class EventDetailActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         // Récupération des données passées via l'Intent
-        val eventTitle = intent.getStringExtra("eventTitle") ?: "Titre inconnu"
-        val eventDescription = intent.getStringExtra("eventDescription") ?: "Description indisponible"
-        val eventDate = intent.getStringExtra("eventDate") ?: "Date inconnue"
-        val eventLocation = intent.getStringExtra("eventLocation") ?: "Lieu inconnu"
-        val eventCategory = intent.getStringExtra("eventCategory") ?: "Catégorie inconnue"
+        val event = intent.getSerializableExtra("event") as Event
 
         setContent {
             EventDetailScreen(
-                title = eventTitle,
-                description = eventDescription,
-                date = eventDate,
-                location = eventLocation,
-                category = eventCategory
+                title = event.title,
+                description = event.description,
+                date = event.date,
+                location = event.location,
+                category = event.category
             )
         }
     }
