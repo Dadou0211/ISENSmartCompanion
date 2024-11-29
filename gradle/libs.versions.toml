@@ -12,6 +12,12 @@ navigationCompose = "2.8.4"
 retrofit = "2.11.0"
 converterGson = "2.11.0"
 generativeai = "0.9.0"
+roomCompiler = "2.7.0-alpha11"
+roomKtx = "2.7.0-alpha11"
+hiltAndroid = "2.52"
+hiltCompiler = "2.52"
+runtimeLivedata = "1.7.5"
+datastoreCoreAndroid = "1.1.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -32,6 +38,12 @@ androidx-navigation-compose = { group = "androidx.navigation", name = "navigatio
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "converterGson" }
 generativeai = { group = "com.google.ai.client.generativeai", name = "generativeai", version.ref = "generativeai" }
+androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomCompiler" }
+androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomKtx" }
+hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hiltAndroid" }
+hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hiltCompiler" }
+androidx-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "runtimeLivedata" }
+androidx-datastore-core-android = { group = "androidx.datastore", name = "datastore-core-android", version.ref = "datastoreCoreAndroid" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

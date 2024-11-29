@@ -34,9 +34,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.room.Room
+
 import fr.isen.ghazarian.isensmartcompanion.R
+import fr.isen.ghazarian.isensmartcompanion.basededonnees.AppDatabase
 import fr.isen.ghazarian.isensmartcompanion.component.iagemini.generateText
+import fr.isen.ghazarian.isensmartcompanion.component.interaction.Interaction
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.Date
+
 
 @Composable
 fun MyMainScreen() {
@@ -47,6 +55,12 @@ fun MyMainScreen() {
         remember { mutableStateListOf<Pair<String, String>>() } // Historique
     val context = LocalContext.current // Contexte nécessaire pour afficher un Toast
     val coroutineScope = rememberCoroutineScope() // Pour exécuter des tâches suspendues
+    val database = Room.databaseBuilder(
+        context.applicationContext,
+        AppDatabase::class.java, "app_database"
+    ).build()
+    val interactionDao = database.interactionDao()
+
 
 
     Column(
@@ -117,16 +131,23 @@ fun MyMainScreen() {
                     userInput = ""
                     coroutineScope.launch {
                         val geminiResponse = generateText(newText)
-                        questionsAndResponses.add(
-                            Pair("Question : $newText", "Réponse : $geminiResponse")
+
+                        val interaction = Interaction(
+                            question = "Question : $newText",
+                            response = "Réponse : $geminiResponse"
                         )
+                        interactionDao.insertInteraction(interaction)
+                        questionsAndResponses.add(
+                            Pair("Question : $newText", "Réponse : $geminiResponse"))
                     }
                 }
-
             }) {
                 Text("Valider")
             }
 
+
         }
     }
 }
+
+

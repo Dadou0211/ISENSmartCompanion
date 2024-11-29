@@ -2,8 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin") version "2.0.1"
-
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -13,7 +13,7 @@ android {
     defaultConfig {
         applicationId = "fr.isen.ghazarian.isensmartcompanion"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -60,6 +60,11 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.generativeai)
+    implementation ("androidx.room:room-runtime:2.5.1")
+    implementation ("androidx.room:room-ktx:2.5.1")
+    implementation(libs.androidx.datastore.core.android)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
