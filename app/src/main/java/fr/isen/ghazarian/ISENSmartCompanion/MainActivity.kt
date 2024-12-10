@@ -1,8 +1,11 @@
 package fr.isen.ghazarian.isensmartcompanion
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
@@ -26,6 +29,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.room.Room
+import fr.isen.ghazarian.isensmartcompanion.agenda.AgendaViewModel
 import fr.isen.ghazarian.isensmartcompanion.basededonnees.AppDatabase
 import fr.isen.ghazarian.isensmartcompanion.component.AgendaScreen
 import fr.isen.ghazarian.isensmartcompanion.component.EventScreen
@@ -35,14 +39,18 @@ import fr.isen.ghazarian.isensmartcompanion.component.MyMainScreen
 
 
 class MainActivity : ComponentActivity() {
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             AppWithBottomNavigation()
         }
     }
+
 }
 
+
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AppWithBottomNavigation() {
     val context = LocalContext.current
@@ -54,6 +62,7 @@ fun AppWithBottomNavigation() {
     ).build()
     val interactionDao = database.interactionDao()
     val viewModel = remember { InteractionViewModel(interactionDao) }
+
 
 
     Scaffold(
@@ -108,6 +117,7 @@ data class NavigationItem(
     val icon: androidx.compose.ui.graphics.vector.ImageVector
 )
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview(showBackground = true)
 @Composable
 fun PreviewAppWithBottomNavigation() {

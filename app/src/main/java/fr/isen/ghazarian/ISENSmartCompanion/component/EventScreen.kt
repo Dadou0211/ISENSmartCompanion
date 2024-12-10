@@ -3,14 +3,19 @@ package fr.isen.ghazarian.isensmartcompanion.component
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,7 +27,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -49,10 +59,8 @@ data class Event(
     val category: String
 ) : Serializable
 
-
-fun fetchEvent(events : MutableState<List<Event>>, context : Context){
+fun fetchEvent(events: MutableState<List<Event>>, context: Context) {
     val call = RetrofitInstance.api.getEvents()
-
 
     call.enqueue(object : Callback<List<Event>> {
         override fun onResponse(call: Call<List<Event>>, response: Response<List<Event>>) {
@@ -62,39 +70,36 @@ fun fetchEvent(events : MutableState<List<Event>>, context : Context){
         }
 
         override fun onFailure(call: Call<List<Event>>, t: Throwable) {
-
+            Toast.makeText(context, "Erreur de chargement", Toast.LENGTH_SHORT).show()
         }
     })
 }
 
-
 @Composable
 fun EventScreen() {
-    // Utiliser le ViewModel associé au cycle de vie via viewModel()
-    val events = remember { mutableStateOf<List<Event>>(emptyList())}
+    val events = remember { mutableStateOf<List<Event>>(emptyList()) }
     val context = LocalContext.current
 
-
     LaunchedEffect(Unit) {
-            fetchEvent(events, context)
+        fetchEvent(events, context)
     }
 
     Box(
         contentAlignment = Alignment.Center,
-        modifier = Modifier.fillMaxSize()
-    ) {
+        modifier = Modifier
+            .fillMaxSize()
+            .background(brush = Brush.verticalGradient(listOf(Color(0xFFE3F2FD), Color(0xFFBBDEFB)))))
+     {
         if (events.value.isEmpty()) {
-            Text("Chargement des événements...", style = MaterialTheme.typography.bodyLarge)
+            CircularProgressIndicator(modifier = Modifier.size(50.dp))
         } else {
             LazyColumn(
                 modifier = Modifier.padding(16.dp)
             ) {
                 items(events.value) { event ->
                     EventItem(event = event) { selectedEvent ->
-
                         val intent = Intent(context, EventDetailActivity::class.java).apply {
                             putExtra("event", selectedEvent)
-
                         }
                         context.startActivity(intent)
                     }
@@ -104,8 +109,6 @@ fun EventScreen() {
     }
 }
 
-
-
 @Composable
 fun EventItem(event: Event, onClick: (Event) -> Unit) {
     Card(
@@ -113,15 +116,40 @@ fun EventItem(event: Event, onClick: (Event) -> Unit) {
             .padding(8.dp)
             .fillMaxWidth()
             .clickable { onClick(event) }
+            .background(Color.White)
+            .shadow(5.dp, shape = RoundedCornerShape(12.dp), clip = true),
+        shape = RoundedCornerShape(12.dp),
+
     ) {
-        Box(
-            modifier = Modifier.padding(16.dp)
+        Column(
+            modifier = Modifier
+                .padding(16.dp)
         ) {
             Text(
                 text = event.title,
-                style = MaterialTheme.typography.bodyLarge
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    color = Color(0xFF3F51B5),
+                    fontWeight = FontWeight.Bold
+                ),
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+            Text(
+                text = event.location,
+                style = TextStyle(color = Color(0xFF757575)),
+                modifier = Modifier.padding(bottom = 4.dp)
+            )
+            Text(
+                text = event.date,
+                style = TextStyle(color = Color(0xFF757575)),
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+            Text(
+                text = event.category,
+                style = TextStyle(color = Color(0xFF607D8B)),
+                modifier = Modifier.padding(bottom = 4.dp)
             )
         }
     }
 }
+
 

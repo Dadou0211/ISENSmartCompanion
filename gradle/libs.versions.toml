@@ -18,6 +18,7 @@ hiltAndroid = "2.52"
 hiltCompiler = "2.52"
 runtimeLivedata = "1.7.5"
 datastoreCoreAndroid = "1.1.1"
+adapters = "3.2.0-alpha11"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -44,6 +45,7 @@ hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hiltCompiler" }
 androidx-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "runtimeLivedata" }
 androidx-datastore-core-android = { group = "androidx.datastore", name = "datastore-core-android", version.ref = "datastoreCoreAndroid" }
+androidx-adapters = { group = "androidx.databinding", name = "adapters", version.ref = "adapters" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
